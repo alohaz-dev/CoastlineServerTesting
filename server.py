@@ -2,6 +2,7 @@ import socket
 from _thread import *
 import sys
 
+currentPlayer = 0
 server = '192.168.1.66'
 port = 5555
 
@@ -40,16 +41,16 @@ def threaded_client(conn, player):
                     reply = pos[0]
                 else:
                     reply = pos[1]
-                print('Recieved: ', reply)
-                print('Sending: ', reply)
+                #print('Recieved: ', reply)
+                #print('Sending: ', reply)
             conn.sendall(str.encode(make_pos(reply)))
         except:
             break
 
     print('Lost connection')
+    currentPlayer -= 1
     conn.close()
 
-currentPlayer = 0
 while True:
     conn, addr = s.accept()
     print('Connected to:', addr, '\nPlayer: ', currentPlayer+1)
